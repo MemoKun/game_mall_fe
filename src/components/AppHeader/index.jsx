@@ -10,14 +10,21 @@ import {
   UnorderedListOutlined,
   WalletOutlined,
 } from "@ant-design/icons";
+import { NavLink } from "react-router-dom";
 
 const AppHeader = () => {
   const { userInfo } = useContext(UserContext);
   const menu = (
     <Menu>
-      <Menu.Item icon={<UserOutlined />}>账号管理</Menu.Item>
-      <Menu.Item icon={<UnorderedListOutlined />}>购买记录</Menu.Item>
-      <Menu.Item icon={<WalletOutlined />}>我的钱包</Menu.Item>
+      <Menu.Item icon={<UserOutlined />}>
+        <NavLink to="/user">账号管理</NavLink>
+      </Menu.Item>
+      <Menu.Item icon={<UnorderedListOutlined />}>
+        <NavLink to="/records">购买记录</NavLink>
+      </Menu.Item>
+      <Menu.Item icon={<WalletOutlined />}>
+        <NavLink to="/wallet">我的钱包</NavLink>
+      </Menu.Item>
     </Menu>
   );
   return (

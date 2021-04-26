@@ -30,7 +30,7 @@ export const UserProvider = (props) => {
         message.warn("登录过期，请重新登录");
       }
     } else {
-      history.replace("/product/management");
+      history.replace("/product/list");
       message.success("登录成功");
     }
   }, [isLogin, history]);
