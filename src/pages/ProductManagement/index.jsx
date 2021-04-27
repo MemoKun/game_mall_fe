@@ -1,7 +1,20 @@
-import { Button, Input, Row, Col, Select, Table } from "antd";
+import {
+  Button,
+  Input,
+  Row,
+  Col,
+  Select,
+  Table,
+  Drawer,
+  Form,
+  InputNumber,
+  Radio,
+} from "antd";
 import React, { useState } from "react";
 import { PlusOutlined, SearchOutlined } from "@ant-design/icons";
 import "./index.less";
+import PictureWall from "../../components/PictrueWall";
+import moment from "moment";
 
 const { Option } = Select;
 
@@ -15,12 +28,25 @@ const mockDataSource = [
   },
 ];
 
+const initialValues = {
+  productName: "",
+  producType: 1,
+  price: 0,
+  productDesc: "",
+  extra: "",
+};
+
 const ProductManagement = () => {
   const [filter, setFilter] = useState({
     productName: "",
     keywords: [],
     productType: 0,
   });
+  const [form] = Form.useForm();
+
+  const [drawerVisible, setDrawerVisible] = useState(false);
+  const [productId, setProductId] = useState(0);
+  const [bannerImgs, setBannerImgs] = useState([]);
 
   const onFilterChange = (key, value) => {
     setFilter({
@@ -35,6 +61,13 @@ const ProductManagement = () => {
 
   const clickEdit = (id) => {
     console.log("edit", id);
+    setDrawerVisible(true);
+    setProductId(id);
+  };
+
+  const clickCreate = () => {
+    setDrawerVisible(true);
+    setProductId(0);
   };
 
   const columns = [
@@ -57,11 +90,30 @@ const ProductManagement = () => {
       width: 120,
     },
     {
+      title: "价格/元",
+      key: "price",
+      dataIndex: "price",
+      width: 120,
+      render: (value) => ((value || 0) / 100).toFixed(2),
+    },
+    {
       title: "商品描述",
       key: "productDesc",
       dataIndex: "productDesc",
-      ellipsis: true,
       width: 200,
+      // ellipsis: true,
+      render: (text) => (
+        <div style={{ maxHeight: 100, textOverflow: "ellipsis" }}>
+          {`${text}`.slice(0, 39) + "..."}
+        </div>
+      ),
+    },
+    {
+      title: "创建时间",
+      key: "createTime",
+      dataIndex: "createTime",
+      width: 150,
+      render: (value) => moment((value || 0) * 1000).format("YYYY-MM-DD"),
     },
     {
       title: "操作",
@@ -85,6 +137,28 @@ const ProductManagement = () => {
       },
     },
   ];
+
+  const closeDrawer = () => {
+    setDrawerVisible(false);
+    form.resetFields();
+    setBannerImgs([]);
+  };
+
+  const clickSave = () => {
+    console.log("upsertProduct", productId, form.getFieldsValue());
+    console.log("bannerImgs", bannerImgs);
+  };
+
+  const footer = (
+    <div style={{ textAlign: "right" }}>
+      <Button style={{ marginRight: 8 }} onClick={closeDrawer}>
+        取消
+      </Button>
+      <Button type="primary" onClick={clickSave}>
+        保存
+      </Button>
+    </div>
+  );
   return (
     <div className="product-management">
       <div className="page-title">商品管理</div>
@@ -138,7 +212,7 @@ const ProductManagement = () => {
       </div>
       <div className="table-div">
         <div className="tool-bar">
-          <Button type="primary" icon={<PlusOutlined />}>
+          <Button type="primary" icon={<PlusOutlined />} onClick={clickCreate}>
             新建商品
           </Button>
         </div>
@@ -149,6 +223,77 @@ const ProductManagement = () => {
           scroll={{ x: "max-content" }}
         />
       </div>
+      <Drawer
+        visible={drawerVisible}
+        width={600}
+        title={productId ? "编辑商品" : "新建商品"}
+        onClose={closeDrawer}
+        footer={footer}
+      >
+        <Form
+          initialValues={initialValues}
+          form={form}
+          wrapperCol={{ span: 16 }}
+          labelCol={{ span: 4 }}
+        >
+          <Form.Item
+            label="商品名称"
+            name="productName"
+            rules={[{ required: true, message: "请输入商品名称" }]}
+          >
+            <Input placeholder="请输入商品名称" maxLength={20} />
+          </Form.Item>
+          <Form.Item
+            label="商品类型"
+            name="producType"
+            rules={[{ required: true, message: "请选择商品类型" }]}
+          >
+            <Radio.Group>
+              <Radio value={1}>1</Radio>
+              <Radio value={2}>2</Radio>
+            </Radio.Group>
+          </Form.Item>
+          <Form.Item
+            label="商品价格"
+            name="price"
+            rules={[{ required: true, message: "请输入商品价格" }]}
+          >
+            <InputNumber placeholder="元" min={0} precision={2} />
+          </Form.Item>
+          <Form.Item
+            label="详情图"
+            rules={[{ required: true, message: "请上传产品详情图" }]}
+          >
+            <PictureWall
+              value={bannerImgs}
+              onChange={setBannerImgs}
+              maxLength={5}
+            />
+          </Form.Item>
+          <Form.Item
+            label="商品描述"
+            name="productDesc"
+            rules={[{ required: true, message: "请输入商品描述" }]}
+          >
+            <Input.TextArea
+              showCount
+              autoSize
+              placeholder="请输入商品描述"
+              allowClear
+              maxLength={200}
+            />
+          </Form.Item>
+          <Form.Item label="备注" name="extra">
+            <Input.TextArea
+              showCount
+              autoSize
+              placeholder="备注"
+              allowClear
+              maxLength={200}
+            />
+          </Form.Item>
+        </Form>
+      </Drawer>
     </div>
   );
 };

@@ -100,7 +100,11 @@ const LoginPage = () => {
             ]}
             name="password"
           >
-            <Input placeholder="请输入密码" type="password" maxLength={12} />
+            <Input.Password
+              placeholder="请输入密码"
+              type="password"
+              maxLength={12}
+            />
           </Form.Item>
           <Form.Item
             label="重复密码"
@@ -116,7 +120,7 @@ const LoginPage = () => {
             ]}
             name="repeatedPassword"
           >
-            <Input
+            <Input.Password
               placeholder="请重复输入密码"
               type="password"
               maxLength={12}
