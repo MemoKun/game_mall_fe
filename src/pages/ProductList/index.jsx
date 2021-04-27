@@ -79,7 +79,7 @@ const ProductList = () => {
   };
   return (
     <div className="product-list-page">
-      <div className="page-title">商品管理</div>
+      <div className="page-title">热门商品</div>
       <div className="search-bar">
         <Row gutter={10}>
           <Col>
