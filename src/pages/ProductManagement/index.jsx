@@ -25,6 +25,7 @@ const mockDataSource = [
     productType: 1,
     productDesc:
       "商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述",
+    createdTime: "1619531575",
   },
 ];
 
@@ -110,8 +111,8 @@ const ProductManagement = () => {
     },
     {
       title: "创建时间",
-      key: "createTime",
-      dataIndex: "createTime",
+      key: "createdTime",
+      dataIndex: "createdTime",
       width: 150,
       render: (value) => moment((value || 0) * 1000).format("YYYY-MM-DD"),
     },

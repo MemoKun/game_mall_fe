@@ -1,4 +1,4 @@
-import { Layout, Dropdown, Menu } from "antd";
+import { Layout, Dropdown, Menu, Button } from "antd";
 import React, { useContext } from "react";
 import { UserContext } from "../../contexts/UserContext";
 import { GameIconFont } from "../IconFonts";
@@ -9,6 +9,7 @@ import {
   UserOutlined,
   UnorderedListOutlined,
   WalletOutlined,
+  LoginOutlined,
 } from "@ant-design/icons";
 import { NavLink } from "react-router-dom";
 
@@ -16,14 +17,31 @@ const AppHeader = () => {
   const { userInfo } = useContext(UserContext);
   const menu = (
     <Menu>
-      <Menu.Item icon={<UserOutlined />}>
-        <NavLink to="/user">账号管理</NavLink>
+      <Menu.Item>
+        <NavLink to="/user">
+          <Button icon={<UserOutlined />} type="text" size="small">
+            账号管理
+          </Button>
+        </NavLink>
       </Menu.Item>
-      <Menu.Item icon={<UnorderedListOutlined />}>
-        <NavLink to="/records">购买记录</NavLink>
+      <Menu.Item>
+        <NavLink to="/order">
+          <Button icon={<UnorderedListOutlined />} type="text" size="small">
+            我的订单
+          </Button>
+        </NavLink>
       </Menu.Item>
-      <Menu.Item icon={<WalletOutlined />}>
-        <NavLink to="/wallet">我的钱包</NavLink>
+      <Menu.Item>
+        <NavLink to="/wallet">
+          <Button icon={<WalletOutlined />} type="text" size="small">
+            我的钱包
+          </Button>
+        </NavLink>
+      </Menu.Item>
+      <Menu.Item>
+        <Button icon={<LoginOutlined />} type="text" danger size="small">
+          退出登录
+        </Button>
       </Menu.Item>
     </Menu>
   );

@@ -20,7 +20,7 @@ const AppContent = () => {
           <Route exact path="/wallet">
             <WalletPage />
           </Route>
-          <Route exact path="/records">
+          <Route exact path="/order">
             <RecordsPage />
           </Route>
           <Route exact path="/product/management">
