@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { SearchOutlined } from "@ant-design/icons";
 
 import "./index.less";
+import { useHistory } from "react-router-dom";
 
 const mockDataSource = [
   {
@@ -32,6 +33,7 @@ const mockDataSource = [
 ];
 
 const ProductList = () => {
+  const history = useHistory();
   const [pageNum, setPageNum] = useState(1);
   const [filter, setFilter] = useState({
     productName: "",
@@ -46,7 +48,7 @@ const ProductList = () => {
   };
 
   const clickViewDeatail = (id) => {
-    console.log("viewDetail", id);
+    history.push(`/product/detail?id=${id}`);
   };
 
   const clickSearch = () => {
