@@ -10,7 +10,7 @@ const mockDataSource = [
     id: 10001,
     CDKey: "1611408636Bb3upLZb48PMxkq6XXVSQuPtOuf0QI1Q",
     type: "金额充值",
-    mount: 1000,
+    mount: 10000,
     createdTime: "1619531575",
   },
 ];
@@ -66,7 +66,7 @@ const WalletPage = () => {
       <div className="page-title">我的钱包</div>
       <div className="page-card balance">
         <span>当前余额：</span>
-        <span>{(userInfo.balance || 0 / 100).toFixed(2)}</span>
+        <span>{((userInfo.balance || 0) / 100).toFixed(2)}</span>
         <span> 元</span>
       </div>
       <div className="page-card">

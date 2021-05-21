@@ -21,7 +21,7 @@ export const UserProvider = (props) => {
 
   const login = () => {
     setIsLogin(true);
-    setUserInfo({ nickname: "测试" });
+    setUserInfo({ nickname: "测试", balance: 10000 });
   };
 
   const logout = () => {
