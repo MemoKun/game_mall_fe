@@ -1,34 +1,37 @@
-import { Card, Col, List, Row, Input, Button, Select } from "antd";
+import { Card, Col, List, Row, Input, Button, Select, Tag } from "antd";
 import React, { useState } from "react";
 import { SearchOutlined } from "@ant-design/icons";
 import "./index.less";
 import { useHistory } from "react-router-dom";
+import { gameTags } from "../../common/constants";
 
 const { Option } = Select;
 
 const mockDataSource = [
   {
     productId: 1,
-    price: 9999,
-    productName: "【传奇】极品账号",
-    productDesc: "游戏描述游戏描述游戏描述游戏描述游戏描述游戏描述",
-    provider: "哈哈哈",
+    price: 9800,
+    productName: "绝地求生",
+    productDesc:
+      "《绝地求生》(PUBG) 是由蓝洞开发的一款战术竞技型射击类沙盒游戏，在该游戏中，玩家需要在游戏地图上收集各种资源，并在不断缩小的安全区域内对抗其他玩家，让自己生存到最后。",
+    provider: "蓝洞",
     bannerImgs: [
-      "https://jackyliu.cn/wp-content/uploads/2021/01/ma21004-1024x683.jpg",
-      "https://pic4.zhimg.com/v2-029172d2fa000918b5027249c0a56114_1440w.jpg?source=172ae18b",
-      "https://img.cehca.com/uploadimg/image/20191218/20191218115754_28238.jpg",
+      "http://edu-mall-csu.oss-cn-beijing.aliyuncs.com/gameMall/PUBG1.jpg",
+      "http://edu-mall-csu.oss-cn-beijing.aliyuncs.com/gameMall/PUBG3.jpg",
+      "http://edu-mall-csu.oss-cn-beijing.aliyuncs.com/gameMall/PUBG2.jpg",
     ],
   },
   {
     productId: 2,
-    price: 9999,
-    productName: "【传奇】极品账号2",
-    productDesc: "游戏描述游戏描述游戏描述游戏描述游戏描述游戏描述",
-    provider: "哈哈哈",
+    price: 2200,
+    productName: "糖豆人",
+    productDesc:
+      "《糖豆人：终极淘汰赛》(Fall Guys: Ultimate Knockout) 是一款由Mediatonic研发，Devolver Digital发行的多人乱斗闯关综艺游戏",
+    provider: "Devolver Digital",
     bannerImgs: [
-      "https://jackyliu.cn/wp-content/uploads/2021/01/ma21004-1024x683.jpg",
-      "https://pic4.zhimg.com/v2-029172d2fa000918b5027249c0a56114_1440w.jpg?source=172ae18b",
-      "https://img.cehca.com/uploadimg/image/20191218/20191218115754_28238.jpg",
+      "http://edu-mall-csu.oss-cn-beijing.aliyuncs.com/gameMall/Fall1.png",
+      "http://edu-mall-csu.oss-cn-beijing.aliyuncs.com/gameMall/Fall2.png",
+      "http://edu-mall-csu.oss-cn-beijing.aliyuncs.com/gameMall/Fall3.png",
     ],
   },
 ];
@@ -39,7 +42,7 @@ const ProductList = () => {
   const [filter, setFilter] = useState({
     productName: "",
     provider: "",
-    tags: [],
+    tag: 0,
   });
 
   const onFilterChange = (key, value) => {
@@ -65,7 +68,15 @@ const ProductList = () => {
           clickViewDeatail(item.productId);
         }}
       >
-        <Card cover={<img src={item.bannerImgs[0] || ""} alt="" />}>
+        <Card
+          cover={
+            <img
+              style={{ maxWidth: 248, maxHeight: 160, objectFit: "contain" }}
+              src={item.bannerImgs[0] || ""}
+              alt=""
+            />
+          }
+        >
           <Card.Meta
             title={item.productName}
             description={`${item.productDesc}`.slice(0, 20) + "..."}
@@ -85,7 +96,7 @@ const ProductList = () => {
     <div className="product-list-page">
       <div className="page-title">热门游戏</div>
       <div className="search-bar">
-        <Row gutter={10}>
+        <Row gutter={10} className="search-row">
           <Col>
             <Input
               className="search-item"
@@ -131,6 +142,23 @@ const ProductList = () => {
               搜索
             </Button>
           </Col>
+        </Row>
+        <Row className="search-row">
+          <Col style={{ marginRight: 10 }}>
+            <div>游戏分类</div>
+          </Col>
+          {[{ value: 0, label: "全部" }, ...gameTags].map((item) => (
+            <Tag.CheckableTag
+              key={item.value}
+              value={item.value}
+              checked={filter.tag === item.value}
+              onChange={() => {
+                onFilterChange("tag", item.value);
+              }}
+            >
+              {item.label}
+            </Tag.CheckableTag>
+          ))}
         </Row>
       </div>
       <div className="list-div">

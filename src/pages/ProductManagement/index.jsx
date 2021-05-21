@@ -8,23 +8,26 @@ import {
   Drawer,
   Form,
   InputNumber,
-  Radio,
+  Tag,
 } from "antd";
 import React, { useState } from "react";
 import { PlusOutlined, SearchOutlined } from "@ant-design/icons";
 import "./index.less";
 import PictureWall from "../../components/PictrueWall";
 import moment from "moment";
+import { gameTags } from "../../common/constants";
+import FileUpload from "../../components/FileUpload";
 
 const { Option } = Select;
 
 const mockDataSource = [
   {
     productId: 1,
-    productName: "测试",
+    productName: "绝地求生",
+    price: 9800,
     productType: 1,
     productDesc:
-      "游戏描述游戏描述游戏描述游戏描述游戏描述游戏描述游戏描述游戏描述游戏描述游戏描述游戏描述游戏描述",
+      "《绝地求生》(PUBG) 是由蓝洞开发的一款战术竞技型射击类沙盒游戏，在该游戏中，玩家需要在游戏地图上收集各种资源，并在不断缩小的安全区域内对抗其他玩家，让自己生存到最后。",
     createdTime: "1619531575",
   },
 ];
@@ -42,7 +45,7 @@ const ProductManagement = () => {
     productName: "",
     keywords: [],
     productType: 0,
-    tags: [],
+    tag: 0,
   });
   const [form] = Form.useForm();
 
@@ -165,7 +168,7 @@ const ProductManagement = () => {
     <div className="product-management">
       <div className="page-title">游戏管理</div>
       <div className="search-bar">
-        <Row gutter={10}>
+        <Row gutter={10} className="search-row">
           <Col>
             <Input
               className="search-item"
@@ -202,20 +205,6 @@ const ProductManagement = () => {
             </Select>
           </Col>
           <Col>
-            <Select
-              className="search-item"
-              placeholder="游戏分类"
-              mode="multiple"
-              value={filter.tags}
-              onChange={(value) => {
-                onFilterChange("tags", value);
-              }}
-            >
-              <Option value={0}>标签0</Option>
-              <Option value={1}>标签1</Option>
-            </Select>
-          </Col>
-          <Col>
             <Button
               type="primary"
               icon={<SearchOutlined />}
@@ -225,11 +214,28 @@ const ProductManagement = () => {
             </Button>
           </Col>
         </Row>
+        <Row className="search-row">
+          <Col style={{ marginRight: 10 }}>
+            <div>游戏分类</div>
+          </Col>
+          {[{ value: 0, label: "全部" }, ...gameTags].map((item) => (
+            <Tag.CheckableTag
+              key={item.value}
+              value={item.value}
+              checked={filter.tag === item.value}
+              onChange={() => {
+                onFilterChange("tag", item.value);
+              }}
+            >
+              {item.label}
+            </Tag.CheckableTag>
+          ))}
+        </Row>
       </div>
       <div className="table-div">
         <div className="tool-bar">
           <Button type="primary" icon={<PlusOutlined />} onClick={clickCreate}>
-            新建游戏
+            发布游戏
           </Button>
         </div>
         <Table
@@ -260,22 +266,16 @@ const ProductManagement = () => {
             <Input placeholder="请输入游戏名称" maxLength={20} />
           </Form.Item>
           <Form.Item
-            label="游戏类型"
-            name="producType"
-            rules={[{ required: true, message: "请选择游戏类型" }]}
-          >
-            <Radio.Group>
-              <Radio value={1}>1</Radio>
-              <Radio value={2}>2</Radio>
-            </Radio.Group>
-          </Form.Item>
-          <Form.Item
             label="游戏分类"
             name="tags"
             rules={[{ required: true, message: "请选择游戏分类标签" }]}
           >
-            <Select mode="multiple" placeholder="请选择游戏分类标签">
-              <Option value={0}>标签0</Option>
+            <Select placeholder="请选择游戏分类标签">
+              {gameTags.map((item) => (
+                <Option key={item.value} value={item.value}>
+                  {item.label}
+                </Option>
+              ))}
             </Select>
           </Form.Item>
           <Form.Item
@@ -294,6 +294,13 @@ const ProductManagement = () => {
               onChange={setBannerImgs}
               maxLength={5}
             />
+          </Form.Item>
+          <Form.Item
+            label="游戏文件"
+            name="fileUrl"
+            rules={[{ required: true, message: "请上传游戏文件" }]}
+          >
+            <FileUpload />
           </Form.Item>
           <Form.Item
             label="游戏描述"

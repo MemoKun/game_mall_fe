@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Input, Row, Col, Select, Table } from "antd";
+import { Button, Input, Row, Col, Select, Table, message } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import moment from "moment";
 import "./index.less";
@@ -10,12 +10,12 @@ const mockDataSource = [
   {
     orderId: 1,
     orderNo: "GM123456",
-    productName: "【传奇】代练",
+    productName: "绝地求生",
     createdTime: "1619531575",
     bannerImgs: [
-      "https://jackyliu.cn/wp-content/uploads/2021/01/ma21004-1024x683.jpg",
-      "https://pic4.zhimg.com/v2-029172d2fa000918b5027249c0a56114_1440w.jpg?source=172ae18b",
-      "https://img.cehca.com/uploadimg/image/20191218/20191218115754_28238.jpg",
+      "http://edu-mall-csu.oss-cn-beijing.aliyuncs.com/gameMall/PUBG1.jpg",
+      "http://edu-mall-csu.oss-cn-beijing.aliyuncs.com/gameMall/PUBG3.jpg",
+      "http://edu-mall-csu.oss-cn-beijing.aliyuncs.com/gameMall/PUBG2.jpg",
     ],
     status: 1,
   },
@@ -43,6 +43,9 @@ const RecordsPage = () => {
 
   const clickViewDetail = (id) => {
     history.push(`/product/detail?id=${id}`);
+  };
+  const clickDownLoad = (record) => {
+    message.info(`开始下载游戏${record.productName}`);
   };
 
   const columns = [
@@ -98,6 +101,14 @@ const RecordsPage = () => {
               }}
             >
               游戏详情
+            </span>
+            <span
+              className="link-text"
+              onClick={() => {
+                clickDownLoad(record);
+              }}
+            >
+              文件下载
             </span>
           </>
         );
