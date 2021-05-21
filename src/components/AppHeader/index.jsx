@@ -1,4 +1,4 @@
-import { Layout, Dropdown, Menu, Button } from "antd";
+import { Layout, Dropdown, Menu, Button, Modal, message } from "antd";
 import React, { useContext } from "react";
 import { UserContext } from "../../contexts/UserContext";
 import { GameIconFont } from "../IconFonts";
@@ -14,7 +14,23 @@ import {
 import { NavLink } from "react-router-dom";
 
 const AppHeader = () => {
-  const { userInfo } = useContext(UserContext);
+  const { userInfo, logout } = useContext(UserContext);
+
+  const clickLogout = () => {
+    Modal.confirm({
+      content: "确认要退出当前账号？",
+      okText: "确认退出",
+      cancelText: "取消",
+      okButtonProps: {
+        danger: true,
+      },
+      onOk: () => {
+        logout();
+        message.success("退出成功！");
+      },
+    });
+  };
+
   const menu = (
     <Menu>
       <Menu.Item>
@@ -39,7 +55,13 @@ const AppHeader = () => {
         </NavLink>
       </Menu.Item>
       <Menu.Item>
-        <Button icon={<LoginOutlined />} type="text" danger size="small">
+        <Button
+          icon={<LoginOutlined />}
+          type="text"
+          danger
+          size="small"
+          onClick={clickLogout}
+        >
           退出登录
         </Button>
       </Menu.Item>

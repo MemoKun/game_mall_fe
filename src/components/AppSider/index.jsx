@@ -20,12 +20,12 @@ const AppSider = withRouter(({ location }) => {
       <Menu theme="light" mode="inline" selectedKeys={[location.pathname]}>
         <Menu.Item key="/product/list" icon={<ShoppingCartOutlined />}>
           <NavLink to="/product/list">
-            <span>热门商品</span>
+            <span>热门游戏</span>
           </NavLink>
         </Menu.Item>
         <Menu.Item key="/product/management" icon={<AppstoreAddOutlined />}>
           <NavLink to="/product/management">
-            <span>商品管理</span>
+            <span>游戏管理</span>
           </NavLink>
         </Menu.Item>
       </Menu>

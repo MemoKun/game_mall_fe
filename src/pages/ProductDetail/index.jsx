@@ -18,7 +18,7 @@ const prodcutDetail = {
   price: 9999,
   productName: "绝地求生",
   productDesc:
-    "商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述",
+    "游戏描述游戏描述游戏描述游戏描述游戏描述游戏描述游戏描述游戏描述游戏描述游戏描述游戏描述游戏描述",
   tags: ["FPS", "TPS", "多人"],
   provider: "哈哈哈",
   bannerImgs: [
@@ -94,7 +94,7 @@ const ProductDetail = () => {
   return (
     <div className="product-detail-page">
       <div className="page-title">
-        {prodcutDetail.productName || "商品详情"}
+        {prodcutDetail.productName || "游戏详情"}
       </div>
       <div className="detail-div">
         <div className="main-detail">
@@ -109,7 +109,7 @@ const ProductDetail = () => {
           </div>
           <div className="detail-info">
             <Row className="info-item">
-              <Col>商品分类：</Col>
+              <Col>游戏分类：</Col>
               <Col>
                 {(prodcutDetail.tags || []).map((tag) => (
                   <Tag key={tag}>{tag}</Tag>
@@ -117,7 +117,7 @@ const ProductDetail = () => {
               </Col>
             </Row>
             <Row className="info-item">
-              <Col>商品描述：</Col>
+              <Col>游戏描述：</Col>
               <Col className="product-desc">{prodcutDetail.productDesc}</Col>
             </Row>
           </div>

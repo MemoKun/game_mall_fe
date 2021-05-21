@@ -24,7 +24,7 @@ const mockDataSource = [
     productName: "测试",
     productType: 1,
     productDesc:
-      "商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述",
+      "游戏描述游戏描述游戏描述游戏描述游戏描述游戏描述游戏描述游戏描述游戏描述游戏描述游戏描述游戏描述",
     createdTime: "1619531575",
   },
 ];
@@ -42,6 +42,7 @@ const ProductManagement = () => {
     productName: "",
     keywords: [],
     productType: 0,
+    tags: [],
   });
   const [form] = Form.useForm();
 
@@ -73,19 +74,19 @@ const ProductManagement = () => {
 
   const columns = [
     {
-      title: "商品ID",
+      title: "游戏ID",
       key: "productId",
       dataIndex: "productId",
       width: 120,
     },
     {
-      title: "商品名称",
+      title: "游戏名称",
       key: "productName",
       dataIndex: "productName",
       width: 200,
     },
     {
-      title: "商品类型",
+      title: "游戏类型",
       key: "productType",
       dataIndex: "productType",
       width: 120,
@@ -98,7 +99,7 @@ const ProductManagement = () => {
       render: (value) => ((value || 0) / 100).toFixed(2),
     },
     {
-      title: "商品描述",
+      title: "游戏描述",
       key: "productDesc",
       dataIndex: "productDesc",
       width: 200,
@@ -162,13 +163,13 @@ const ProductManagement = () => {
   );
   return (
     <div className="product-management">
-      <div className="page-title">商品管理</div>
+      <div className="page-title">游戏管理</div>
       <div className="search-bar">
         <Row gutter={10}>
           <Col>
             <Input
               className="search-item"
-              placeholder="商品名称"
+              placeholder="游戏名称"
               value={filter.productName}
               allowClear
               onChange={(e) => {
@@ -191,13 +192,27 @@ const ProductManagement = () => {
           <Col>
             <Select
               className="search-item"
-              placeholder="商品类型"
+              placeholder="游戏类型"
               value={filter.productType}
               onChange={(value) => {
                 onFilterChange("productType", value);
               }}
             >
               <Option value={0}>全部</Option>
+            </Select>
+          </Col>
+          <Col>
+            <Select
+              className="search-item"
+              placeholder="游戏分类"
+              mode="multiple"
+              value={filter.tags}
+              onChange={(value) => {
+                onFilterChange("tags", value);
+              }}
+            >
+              <Option value={0}>标签0</Option>
+              <Option value={1}>标签1</Option>
             </Select>
           </Col>
           <Col>
@@ -214,7 +229,7 @@ const ProductManagement = () => {
       <div className="table-div">
         <div className="tool-bar">
           <Button type="primary" icon={<PlusOutlined />} onClick={clickCreate}>
-            新建商品
+            新建游戏
           </Button>
         </div>
         <Table
@@ -227,7 +242,7 @@ const ProductManagement = () => {
       <Drawer
         visible={drawerVisible}
         width={600}
-        title={productId ? "编辑商品" : "新建商品"}
+        title={productId ? "编辑游戏" : "新建游戏"}
         onClose={closeDrawer}
         footer={footer}
       >
@@ -238,16 +253,16 @@ const ProductManagement = () => {
           labelCol={{ span: 4 }}
         >
           <Form.Item
-            label="商品名称"
+            label="游戏名称"
             name="productName"
-            rules={[{ required: true, message: "请输入商品名称" }]}
+            rules={[{ required: true, message: "请输入游戏名称" }]}
           >
-            <Input placeholder="请输入商品名称" maxLength={20} />
+            <Input placeholder="请输入游戏名称" maxLength={20} />
           </Form.Item>
           <Form.Item
-            label="商品类型"
+            label="游戏类型"
             name="producType"
-            rules={[{ required: true, message: "请选择商品类型" }]}
+            rules={[{ required: true, message: "请选择游戏类型" }]}
           >
             <Radio.Group>
               <Radio value={1}>1</Radio>
@@ -255,9 +270,18 @@ const ProductManagement = () => {
             </Radio.Group>
           </Form.Item>
           <Form.Item
-            label="商品价格"
+            label="游戏分类"
+            name="tags"
+            rules={[{ required: true, message: "请选择游戏分类标签" }]}
+          >
+            <Select mode="multiple" placeholder="请选择游戏分类标签">
+              <Option value={0}>标签0</Option>
+            </Select>
+          </Form.Item>
+          <Form.Item
+            label="游戏价格"
             name="price"
-            rules={[{ required: true, message: "请输入商品价格" }]}
+            rules={[{ required: true, message: "请输入游戏价格" }]}
           >
             <InputNumber placeholder="元" min={0} precision={2} />
           </Form.Item>
@@ -272,14 +296,14 @@ const ProductManagement = () => {
             />
           </Form.Item>
           <Form.Item
-            label="商品描述"
+            label="游戏描述"
             name="productDesc"
-            rules={[{ required: true, message: "请输入商品描述" }]}
+            rules={[{ required: true, message: "请输入游戏描述" }]}
           >
             <Input.TextArea
               showCount
               autoSize
-              placeholder="请输入商品描述"
+              placeholder="请输入游戏描述"
               allowClear
               maxLength={200}
             />

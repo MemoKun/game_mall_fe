@@ -53,13 +53,13 @@ const RecordsPage = () => {
       width: 120,
     },
     {
-      title: "商品名称",
+      title: "游戏名称",
       key: "productName",
       dataIndex: "productName",
       width: 150,
     },
     {
-      title: "商品名称",
+      title: "游戏名称",
       key: "bannerImgs",
       dataIndex: "bannerImgs",
       width: 150,
@@ -97,7 +97,7 @@ const RecordsPage = () => {
                 clickViewDetail(record.productId);
               }}
             >
-              商品详情
+              游戏详情
             </span>
           </>
         );
@@ -124,7 +124,7 @@ const RecordsPage = () => {
           <Col>
             <Input
               className="search-item"
-              placeholder="商品名称"
+              placeholder="游戏名称"
               value={filter.productName}
               allowClear
               onChange={(e) => {

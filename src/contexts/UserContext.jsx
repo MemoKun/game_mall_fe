@@ -6,6 +6,7 @@ const unloginPages = ["/game/mall/login", "/game/mall/register"];
 
 export const UserContext = React.createContext({
   login: () => {},
+  logout: () => {},
   refreshUserInfo: () => {},
   userInfo: { userId: "", userType: 1, nickname: "", balance: 0, account: "" },
   isLogin: false,
@@ -23,11 +24,15 @@ export const UserProvider = (props) => {
     setUserInfo({ nickname: "测试" });
   };
 
+  const logout = () => {
+    setIsLogin(false);
+    setUserInfo({});
+  };
+
   useEffect(() => {
     if (!isLogin) {
       if (!unloginPages.includes(window.location.pathname)) {
         history.replace("/login");
-        message.warn("登录过期，请重新登录");
       }
     } else {
       history.replace("/product/list");
@@ -36,7 +41,7 @@ export const UserProvider = (props) => {
   }, [isLogin, history]);
 
   return (
-    <UserContext.Provider value={{ isLogin, userInfo, login }}>
+    <UserContext.Provider value={{ isLogin, userInfo, login, logout }}>
       {props.children}
     </UserContext.Provider>
   );

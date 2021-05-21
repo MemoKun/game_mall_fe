@@ -1,16 +1,17 @@
-import { Card, Col, List, Row, Input, Button } from "antd";
+import { Card, Col, List, Row, Input, Button, Select } from "antd";
 import React, { useState } from "react";
 import { SearchOutlined } from "@ant-design/icons";
-
 import "./index.less";
 import { useHistory } from "react-router-dom";
+
+const { Option } = Select;
 
 const mockDataSource = [
   {
     productId: 1,
     price: 9999,
     productName: "【传奇】极品账号",
-    productDesc: "商品描述商品描述商品描述商品描述商品描述商品描述",
+    productDesc: "游戏描述游戏描述游戏描述游戏描述游戏描述游戏描述",
     provider: "哈哈哈",
     bannerImgs: [
       "https://jackyliu.cn/wp-content/uploads/2021/01/ma21004-1024x683.jpg",
@@ -22,7 +23,7 @@ const mockDataSource = [
     productId: 2,
     price: 9999,
     productName: "【传奇】极品账号2",
-    productDesc: "商品描述商品描述商品描述商品描述商品描述商品描述",
+    productDesc: "游戏描述游戏描述游戏描述游戏描述游戏描述游戏描述",
     provider: "哈哈哈",
     bannerImgs: [
       "https://jackyliu.cn/wp-content/uploads/2021/01/ma21004-1024x683.jpg",
@@ -38,6 +39,7 @@ const ProductList = () => {
   const [filter, setFilter] = useState({
     productName: "",
     provider: "",
+    tags: [],
   });
 
   const onFilterChange = (key, value) => {
@@ -81,13 +83,13 @@ const ProductList = () => {
   };
   return (
     <div className="product-list-page">
-      <div className="page-title">热门商品</div>
+      <div className="page-title">热门游戏</div>
       <div className="search-bar">
         <Row gutter={10}>
           <Col>
             <Input
               className="search-item"
-              placeholder="商品名称"
+              placeholder="游戏名称"
               value={filter.productName}
               allowClear
               onChange={(e) => {
@@ -105,6 +107,20 @@ const ProductList = () => {
                 onFilterChange("provider", e.target.value);
               }}
             />
+          </Col>
+          <Col>
+            <Select
+              className="search-item"
+              placeholder="游戏分类"
+              mode="multiple"
+              value={filter.tags}
+              onChange={(value) => {
+                onFilterChange("tags", value);
+              }}
+            >
+              <Option value={0}>标签0</Option>
+              <Option value={1}>标签1</Option>
+            </Select>
           </Col>
           <Col>
             <Button
