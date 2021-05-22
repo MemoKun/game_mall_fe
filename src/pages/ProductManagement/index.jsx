@@ -9,6 +9,7 @@ import {
   Form,
   InputNumber,
   Tag,
+  Modal,
 } from "antd";
 import React, { useState } from "react";
 import { PlusOutlined, SearchOutlined } from "@ant-design/icons";
@@ -29,6 +30,19 @@ const mockDataSource = [
     productDesc:
       "《绝地求生》(PUBG) 是由蓝洞开发的一款战术竞技型射击类沙盒游戏，在该游戏中，玩家需要在游戏地图上收集各种资源，并在不断缩小的安全区域内对抗其他玩家，让自己生存到最后。",
     createdTime: "1619531575",
+    status: 1,
+    tag: "多人,射击类",
+  },
+  {
+    productId: 2,
+    productName: "和平精英",
+    price: 1800,
+    productType: 1,
+    productDesc:
+      "《和平精英》是由腾讯光子工作室群自研打造的反恐军事竞赛体验类型国产手游，该作于2019年5月8日正式公测。",
+    createdTime: "1619531675",
+    status: 2,
+    tag: "多人,射击类",
   },
 ];
 
@@ -44,7 +58,6 @@ const ProductManagement = () => {
   const [filter, setFilter] = useState({
     productName: "",
     keywords: [],
-    productType: 0,
     tag: 0,
   });
   const [form] = Form.useForm();
@@ -75,6 +88,14 @@ const ProductManagement = () => {
     setProductId(0);
   };
 
+  const clickChangeStatus = (id, preStatus) => {
+    Modal.confirm({
+      content: `确定要${preStatus === 1 ? "上架" : "下架"}该游戏吗？`,
+      okText: "确定",
+      cancelText: "取消",
+    });
+  };
+
   const columns = [
     {
       title: "游戏ID",
@@ -89,9 +110,9 @@ const ProductManagement = () => {
       width: 200,
     },
     {
-      title: "游戏类型",
-      key: "productType",
-      dataIndex: "productType",
+      title: "游戏分类",
+      key: "tag",
+      dataIndex: "tag",
       width: 120,
     },
     {
@@ -137,6 +158,25 @@ const ProductManagement = () => {
             >
               编辑
             </span>
+            {record.status === 1 ? (
+              <span
+                className="link-text-red"
+                onClick={() => {
+                  clickChangeStatus(record.productId, 2);
+                }}
+              >
+                下架
+              </span>
+            ) : (
+              <span
+                className="link-text"
+                onClick={() => {
+                  clickEdit(record.productId, 1);
+                }}
+              >
+                上架
+              </span>
+            )}
           </>
         );
       },
@@ -191,18 +231,6 @@ const ProductManagement = () => {
                 onFilterChange("keywords", value);
               }}
             />
-          </Col>
-          <Col>
-            <Select
-              className="search-item"
-              placeholder="游戏类型"
-              value={filter.productType}
-              onChange={(value) => {
-                onFilterChange("productType", value);
-              }}
-            >
-              <Option value={0}>全部</Option>
-            </Select>
           </Col>
           <Col>
             <Button

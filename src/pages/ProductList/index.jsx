@@ -1,11 +1,9 @@
-import { Card, Col, List, Row, Input, Button, Select, Tag } from "antd";
+import { Card, Col, List, Row, Input, Button, Tag } from "antd";
 import React, { useState } from "react";
 import { SearchOutlined } from "@ant-design/icons";
 import "./index.less";
 import { useHistory } from "react-router-dom";
 import { gameTags } from "../../common/constants";
-
-const { Option } = Select;
 
 const mockDataSource = [
   {
@@ -120,20 +118,6 @@ const ProductList = () => {
             />
           </Col>
           <Col>
-            <Select
-              className="search-item"
-              placeholder="游戏分类"
-              mode="multiple"
-              value={filter.tags}
-              onChange={(value) => {
-                onFilterChange("tags", value);
-              }}
-            >
-              <Option value={0}>标签0</Option>
-              <Option value={1}>标签1</Option>
-            </Select>
-          </Col>
-          <Col>
             <Button
               type="primary"
               icon={<SearchOutlined />}
@@ -173,7 +157,7 @@ const ProductList = () => {
               setPageNum(page);
             },
           }}
-          grid={{ gutter: 16, column: 4 }}
+          grid={{ gutter: 16, column: 6 }}
         />
       </div>
     </div>
